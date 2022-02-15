@@ -86,3 +86,5 @@ SP_increments <- SP %>% left_join(SP_to_join,
 total_increments <- SP_increments %>% select(abs_increments) %>% sum()
 
 SP_increments %>% mutate(measure = abs_increments / total_increments)
+SPdf %>%
+  filter(date >= "2007-02-01" & date <= "2007-03-01")
