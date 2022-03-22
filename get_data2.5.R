@@ -305,7 +305,7 @@ cq %>%
             suffix = c(".a", ".b")) %>% 
   mutate(area = 0.5*(Cq.a + Cq.b)*0.033) %>% head(10)
 # need to go back to original time series dataset 
-DJ %>% filter(date >= as.Date("2007-01-03") + 1) %>% arrange(date) %>% head()
+DJI %>% filter(date >= as.Date("2007-01-03") + 1) %>% arrange(date) %>% head()
 
 shifts = 4   #this will be l = shifts
 cols = 2
