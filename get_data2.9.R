@@ -491,17 +491,17 @@ ggplot(AVR_cut, aes(x = n, y= eta)) +
 AVR_cut %>% View()
 
 #extended time period; 
-AVR_extended <- AVR_with_time(6614, DJI, 4, as.Date("1992-01-02"), 1000, 1) 
-AVR_extended %>% View()
+#AVR_extended <- AVR_with_time(6614, DJI, 4, as.Date("1992-01-02"), 1000, 1) 
+#AVR_extended %>% View()
 
-ggplot(AVR_extended,  aes(x = n, y= eta)) +
-  geom_point() + geom_line()
+#ggplot(AVR_extended,  aes(x = n, y= eta)) +
+#  geom_point() + geom_line()
 
 DJI_df %>% head()
 DJI_df %>%nrow()
 
-measure_data(DJI, 4, "1992-01-02", 1000, 1)
-partition_function_data(DJI, 4, "1992-01-02", 1000, 1)
+#measure_data(DJI, 4, "1992-01-02", 1000, 1)
+#partition_function_data(DJI, 4, "1992-01-02", 1000, 1)
 
 
 #TESTS --------------------
