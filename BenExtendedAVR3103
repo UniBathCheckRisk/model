@@ -1,0 +1,12 @@
+#extended time period; 
+AVR_extended2 <- AVR_with_time(6614, GSPC, 4, as.Date("1976-01-16"), 1000, 1) 
+AVR_extended2 %>% View()
+
+ggplot(AVR_extended2,  aes(x = n, y= eta)) +
+geom_point() + geom_line() 
+
+lookback_date(GSPC, 4, "1980-01-01", 1000)
+
+View(AVR_extended2)
+
+write.csv(AVR_extended2,"H:\\project_checkrisk\\AVR2.csv", row.names = TRUE)
