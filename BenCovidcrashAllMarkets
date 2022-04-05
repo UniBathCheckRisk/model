@@ -26,6 +26,6 @@ AVRCoV <- ggplot(data = SPCoV, color = "green", aes(x = n, y = eta)) +
   geom_point(data = FTSECoV, color = "orange") +
   geom_line(data = `BTC-USDCoV`, color = "turquoise") +
   geom_point(data = `BTC-USDCoV`, color = "turquoise") +
-  ggtitle("AVR Overlay SPY replicating Fonseca, red=GLD, green=SP, black=DJI, orange=FTSE, pink=HSI, `BTC-USDCoV`=turquoise", )
+  ggtitle("AVR Overlay Covid crash, red=GLD, green=SP, black=DJI, orange=FTSE, pink=HSI, `BTC-USDCoV`=turquoise", )
 
 AVRCoV #outputting the plot
