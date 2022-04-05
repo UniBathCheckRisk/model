@@ -1,0 +1,26 @@
+#output AVR overlay with SPY
+lookback_date(GSPC, 4, "2020-02-20", 1020)
+
+SP_87 <- AVR_with_time(130, GSPC, 4, as.Date("1983-09-08"), 1000, 1) 
+SP_08 <- AVR_with_time(130, GSPC, 4, as.Date("1988-11-04"), 1000, 1)
+SP_11 <- AVR_with_time(130, GSPC, 4, as.Date("1988-10-07"), 1000, 1)
+SP_T60 <- AVR_with_time(130, GSPC, 4, as.Date("1955-12-30"), 1000, 1)
+#SP_29 <- AVR_with_time(130, GSPC, 4, as.Date("1929-01-02"), 1000, 1)
+SP_20 <- AVR_with_time(130, GSPC, 4, as.Date("1988-12-19"), 1000, 1)
+
+#setting up the overlay plot
+AVRSP <- ggplot(data = SP_87, color = "green", aes(x = n, y = eta)) +
+  geom_line() + geom_point(data = SP_87, color = "green") +
+  geom_line(data = SP_08, color = "blue") +
+  geom_point(data = SP_08, color = "blue") +
+  geom_line(data = SP_11, color = "pink") +
+  geom_point(data = SP_11, color = "pink") +
+  geom_line(data = SP_T60, color = "black") +
+  geom_point(data = SP_T60, color = "black") +
+ # geom_line(data = SP_29, color = "red") +
+  # geom_point(data = SP_29, color = "red") +
+  geom_line(data = SP_20, color = "orange") +
+  geom_point(data = SP_20, color = "orange") +
+  ggtitle("AVR Overlay SPY replicating Fonseca, red=1929, green=1987, blue=2008, pink=2011, orange=2020, test(1960)=black")
+
+AVRSP #outputting the plot 
