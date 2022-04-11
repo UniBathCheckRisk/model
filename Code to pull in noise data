@@ -1,0 +1,19 @@
+#clean excel first! ie
+#1. remove excess headers further down in excel file
+#2. make sure excel headers are "date" and "price" in that column order (rearrange columns if needed)
+#3. change code below to suit market you are pulling in eg change DJI to GSPC
+#4. make sure file name is correct and in right location and is xlsx format
+
+
+
+#importing noise data from excel
+Noise_Prices_DJI_imported_into_R <- read_excel("H:/project_checkrisk/Noise_Prices_DJI.xlsx",
+                                               col_types = c("date", "numeric"))
+#View(Noise_Prices_DJI_imported_into_R)
+noise_DJI_df <- data.frame(Noise_Prices_DJI_imported_into_R)
+noise_DJI_df <- noise_DJI_df %>%
+  select("noise_DJI_date" = "date", "noise_DJI_price" = "price")
+noise_DJI_df %>% head()
+DJI_noise <- xts(noise_DJI_df[,2], order.by = noise_DJI_df[,1])
+View(DJI_noise)
+
