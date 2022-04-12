@@ -113,7 +113,6 @@ DJI_whole <- xts(whole_historic_DJI[,2], order.by = whole_historic_DJI[,1])
 
 #DJI_whole %>% View()
 
-
 #HISTORIC SP DATA - help here please. Error [match.names(clabs, names(xi), names do not match previous names)]
 historic_SP <- historic_SP_DJI_df %>% 
   select(SP_dates, GSPC.Close) %>%
@@ -697,7 +696,7 @@ stat_condition_3 <- function(index_name, closing_column, starting_date, N, total
                 by = "ts_day1") %>%
       distinct()                           #date in 1929 is repeated 
     
-  } else if (index_quotes == "GSPC"){
+  } else if (index_quotes %in% c("GSPC", "SP_whole") ){
     
     ts_day1 <- ts_day1 %>%
       left_join(SP_by_eye %>%
@@ -857,6 +856,9 @@ last_AVR_date(DJI_whole, 1, "1992-01-02", 20, 4)
 
 #THE FINAL STATISTICAL OUTCOME TABLE 
 # NOW, putting the above in a function to output the summarized table (4 cols)
+# this will take a window over which AVR shifts are performed (specified by input 'total_shifts') then output weather the AVR has jumped 
+# and in this same window (takeing into consideration the AVR end_dates and using this dates to check if crashes have 
+# occurred in this time in the financial time series)- based off of this sucesses and failures are output 
 AVR_TS_stat_test_1 <- function(total_shifts, index_name, closing_column, starting_date, N, interval_T, AVR_windows, drop_period, drop, index_quotes){
   
   AVR_stat_1 <- AVR_stat_test(total_shifts, index_name, closing_column, starting_date, N, interval_T, AVR_windows)
@@ -907,7 +909,11 @@ AVR_TS_stat_test_1 <- function(total_shifts, index_name, closing_column, startin
 AVR_TS_stat_test_1(20, DJI_whole, 1, "1992-01-02", 1000, 1, 4, 5, 10, "DJI_whole")
 
 GSPC_stat_test <- AVR_TS_stat_test_1(20, GSPC, 4, "1992-01-02", 1000, 1, 4, 5, 10, "GSPC")
+SP_stat_test <- AVR_TS_stat_test_1(20, SP_whole, 1, "1992-01-02", 1000, 1, 4, 5, 10, "SP_whole")
+
+SP_stat_test
 
 #number of trails is the max number in the AVR_windows column and sucesses are the sum of the 1's 
 GSPC_stat_test %>% summarise(total_sucessessful_trails = sum(Success))
 GSPC_stat_test %>% summarise(number_of_trails = max(AVR_window))
+ 
