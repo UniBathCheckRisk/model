@@ -7,8 +7,11 @@ library(dplyr)
 library(TSstudio)
 library(SciViews)
 library(ggplot2)
+
 install.packages('patchwork')
 library(patchwork)
+
+
 
 #loading in S&P 500 data (titled GSPC) from Yahoo; other indexes can be loaded into the vector
 getSymbols("^GSPC", from = as.Date("1992-01-01"),to = "2022-07-01", src = "yahoo")
@@ -898,10 +901,13 @@ AVR_TS_stat_test_1 <- function(total_shifts, index_name, closing_column, startin
     mutate(Success = ifelse((ts_stat == AVR_stat) | (AVR_stat > 0 & ts_stat > 0), 1, 0))
   
   return(AVR_ts) 
-}
+} 
 
 #testing the above function - seems to work
 AVR_TS_stat_test_1(20, DJI_whole, 1, "1992-01-02", 1000, 1, 4, 5, 10, "DJI_whole")
 
-AVR_TS_stat_test_1(20, GSPC, 4, "1992-01-02", 1000, 1, 4, 5, 10, "GSPC")
+GSPC_stat_test <- AVR_TS_stat_test_1(20, GSPC, 4, "1992-01-02", 1000, 1, 4, 5, 10, "GSPC")
 
+#number of trails is the max number in the AVR_windows column and sucesses are the sum of the 1's 
+GSPC_stat_test %>% summarise(total_sucessessful_trails = sum(Success))
+GSPC_stat_test %>% summarise(number_of_trails = max(AVR_window))
