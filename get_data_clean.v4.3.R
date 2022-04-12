@@ -745,7 +745,7 @@ stat_condition_3 <- function(index_name, closing_column, starting_date, N, total
 # DONT WORRY AB THE WARNINGS- code still works 
 stat_DJI_3 <- stat_condition_3(DJI_whole, 1, "1929-01-02", 1000, 22521, 5, 10, "DJI_whole") #filter(!is.na(ts_condition_worst))
 View(stat_DJI_3)
-numb_rows <- stat_DJI_3 %>% filter(ts_condition_3 == 1) %>% nrow() 
+numb_rows <- stat_DJI_3 %>% filter(ts_conditions == 1) %>% nrow() 
 numb_rows
 stat_SP <- stat_condition_3(GSPC, 4, "1929-01-02", 1000, 22521, 5, 10, "GSPC")
 View(stat_SP)   #works on GSPC 
