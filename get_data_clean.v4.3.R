@@ -660,9 +660,19 @@ crash_dates_by_eye <- SP_by_eye %>% select(crash_day, ts_condition_by_eye)
 # LAST INPUT; same as index_name but in quotes!!! e.g. "DJI_whole" or "GSPC"
 stat_condition_3 <- function(index_name, closing_column, starting_date, N, total_shifts, drop_period, drop, index_quotes){
   
-  # load the raw data in, instert the starting date and the total number of shift with the window (N), N + total
-  # shifts equals the number of rows in the time series to be evaluated (N + total_shifts = total rows in ts)
-  ts <- raw_data(index_name, closing_column, starting_date, N, total_shifts)  
+  # load the raw data in
+  output_index <-index_name[, closing_column]
+  
+  index_dataset <- data.frame(date=index(output_index), coredata(output_index)) %>% distinct()
+  
+  #getting time series from starting_date on wards
+  index_to_join <- index_dataset %>% 
+    mutate(date = as.Date(date)) %>%
+    filter(date >= as.Date(starting_date)) %>%
+    arrange(date) %>%
+    mutate(day_number = row_number())
+  
+  ts <- index_to_join  
   ts_day1 <- ts
   ts_day5 <- ts %>%
     mutate(day_number = day_number + (drop_period - 1))  # getting the 5th day to compare to the prices of the firs day
@@ -881,6 +891,7 @@ AVR_TS_stat_test_1 <- function(total_shifts, index_name, closing_column, startin
     filter(ts_day1 <= last_date) %>%                                  
     rename(end_date = ts_day1)
   
+  
   # join AVR and ts together to get the stat test outputs 
   AVR_ts <- AVR_stat_1 %>% 
     left_join(ts_new,  
@@ -903,7 +914,7 @@ AVR_TS_stat_test_1 <- function(total_shifts, index_name, closing_column, startin
     mutate(Success = ifelse((ts_stat == AVR_stat) | (AVR_stat > 0 & ts_stat > 0), 1, 0))
   
   return(AVR_ts) 
-} 
+}
 
 #testing the above function - seems to work
 AVR_TS_stat_test_1(20, DJI_whole, 1, "1992-01-02", 1000, 1, 4, 5, 10, "DJI_whole")
@@ -939,4 +950,9 @@ Z <- function(stat_test_table, p){
 #testing Z value with the GSPC_stat_test table and p=0.03 
 Z(GSPC_stat_test, 0.03)
 
+SP_stat_test <- AVR_TS_stat_test_1(50, SP_whole, 1, "1992-01-02", 1000, 1, 20, 5, 10, "SP_whole")
+SP_stat_test
 
+#checking below--------------------------------------------Now it works-----
+SP_stat_test100 <- AVR_TS_stat_test_1(100, SP_whole, 1, "1992-01-02", 1000, 1, 40, 5, 10, "SP_whole")
+SP_stat_test100 %>% data.frame()
