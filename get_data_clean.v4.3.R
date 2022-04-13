@@ -914,6 +914,29 @@ SP_stat_test <- AVR_TS_stat_test_1(20, SP_whole, 1, "1992-01-02", 1000, 1, 4, 5,
 SP_stat_test
 
 #number of trails is the max number in the AVR_windows column and sucesses are the sum of the 1's 
-GSPC_stat_test %>% summarise(total_sucessessful_trails = sum(Success))
-GSPC_stat_test %>% summarise(number_of_trails = max(AVR_window))
+sucesses <- GSPC_stat_test %>% summarise(total_sucessessful_trails = sum(Success)) %>% data.frame()
+trails <- GSPC_stat_test %>% summarise(number_of_trails = max(AVR_window)) %>% data.frame()
  
+#getting Z value depending on the stat_test output
+X <- sucesses[1,1]
+n <- trails[1,1]
+
+#input the table released from function AVR_TS_stat_test_1 to get the Z value, with a success 
+# probability claim, p, input into the function 
+Z <- function(stat_test_table, p){
+  
+  sucesses <- stat_test_table %>% summarise(total_sucessessful_trails = sum(Success)) %>% data.frame()
+  trails <- stat_test_table %>% summarise(number_of_trails = max(AVR_window)) %>% data.frame()
+  
+  X <- sucesses[1,1]
+  n <- trails[1,1]
+  
+  Z <- (X - (n * p)) / (sqrt(n*p*(1-p)))
+  
+  return(Z)
+}
+
+#testing Z value with the GSPC_stat_test table and p=0.03 
+Z(GSPC_stat_test, 0.03)
+
+
