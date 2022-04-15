@@ -1,12 +1,14 @@
-#clean excel first! ie
-#1. remove excess headers further down in excel file
-#2. make sure excel headers are "date" and "price" in that column order (rearrange columns if needed)
-#3. change code below to suit market you are pulling in eg change DJI to GSPC
-#4. make sure file name is correct and in right location and is xlsx format
+#save excel files off Teams group first
 
+# DJI 1900-01-02 to 2021-10-12
+# S&P 1900-01-02 to 2021-10-12
+# FTSE 1986-06-24 to 2022-01-18 (not perfect)
+# GLD 2005-02-28 to 2022-04-14
+# BTC 2014-09-17 to 2022-04-12
 
+#importing noise data from excel-------------------------
 
-#importing noise data from excel
+#DJI noise
 Noise_Prices_DJI_imported_into_R <- read_excel("H:/project_checkrisk/Noise_Prices_DJI.xlsx",
                                                col_types = c("date", "numeric"))
 #View(Noise_Prices_DJI_imported_into_R)
@@ -17,3 +19,50 @@ noise_DJI_df %>% head()
 DJI_noise <- xts(noise_DJI_df[,2], order.by = noise_DJI_df[,1])
 View(DJI_noise)
 
+
+#SP noise
+Noise_Prices_SP_imported_into_R <- read_excel("H:/project_checkrisk/Noise_Prices_SP.xlsx",
+                                               col_types = c("date", "numeric"))
+#View(Noise_Prices_SP_imported_into_R)
+noise_SP_df <- data.frame(Noise_Prices_SP_imported_into_R)
+noise_SP_df <- noise_SP_df %>%
+  select("noise_SP_date" = "date", "noise_SP_price" = "price")
+noise_SP_df %>% head()
+SP_noise <- xts(noise_SP_df[,2], order.by = noise_SP_df[,1])
+View(SP_noise)
+
+
+#FTSE noise
+Noise_Prices_FTSE_imported_into_R <- read_excel("H:/project_checkrisk/Noise_Prices_FTSE.xlsx",
+                                              col_types = c("date", "numeric"))
+#View(Noise_Prices_FTSE_imported_into_R)
+noise_FTSE_df <- data.frame(Noise_Prices_FTSE_imported_into_R)
+noise_FTSE_df <- noise_FTSE_df %>%
+  select("noise_FTSE_date" = "date", "noise_FTSE_price" = "price")
+noise_FTSE_df %>% head()
+FTSE_noise <- xts(noise_FTSE_df[,2], order.by = noise_FTSE_df[,1])
+View(FTSE_noise)
+
+
+#BTC noise
+Noise_Prices_BTC_imported_into_R <- read_excel("H:/project_checkrisk/Noise_Prices_BTC.xlsx",
+                                                col_types = c("date", "numeric"))
+#View(Noise_Prices_BTC_imported_into_R)
+noise_BTC_df <- data.frame(Noise_Prices_BTC_imported_into_R)
+noise_BTC_df <- noise_BTC_df %>%
+  select("noise_BTC_date" = "date", "noise_BTC_price" = "price")
+noise_BTC_df %>% head()
+BTC_noise <- xts(noise_BTC_df[,2], order.by = noise_BTC_df[,1])
+View(BTC_noise)
+
+
+#GLD noise
+Noise_Prices_GLD_imported_into_R <- read_excel("H:/project_checkrisk/Noise_Prices_GLD.xlsx",
+                                               col_types = c("date", "numeric"))
+#View(Noise_Prices_GLD_imported_into_R)
+noise_GLD_df <- data.frame(Noise_Prices_GLD_imported_into_R)
+noise_GLD_df <- noise_GLD_df %>%
+  select("noise_GLD_date" = "date", "noise_GLD_price" = "price")
+noise_GLD_df %>% head()
+GLD_noise <- xts(noise_GLD_df[,2], order.by = noise_GLD_df[,1])
+View(GLD_noise)
