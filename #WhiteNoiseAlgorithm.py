@@ -6,6 +6,7 @@ Created on Thu Apr  7 13:40:34 2022
 @author: nrobinson15
 """
 
+
 import numpy as np
 import pandas as pd
 from numpy.random import normal
