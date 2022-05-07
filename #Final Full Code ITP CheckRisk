@@ -1,3 +1,4 @@
+#version 4.5, code written by Natalia Arcilla Requena 
 # installing and loading in packages
 install.packages('quantmod')
 install.packages('TSstudio')
